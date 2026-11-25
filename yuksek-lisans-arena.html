@@ -1096,6 +1096,57 @@ LES["Veri Madenciliği"]["Kümeleme"]={
  ]
 };
 
+LES["İleri Sinyal"]={
+"Bölüm 1: Zaman Alanında Ayrık İşaretler":{
+ sure:"10 dk",
+ story:[
+ String.raw`Ayrık zamanlı işaret, bir sayı dizisidir: her sayıya <b>örnek (sample)</b> denir ve $x[n]$ ile gösterilir; $n$ tamsayıdır. İşaret sonlu uzunlukta ($N_1\le n\le N_2$, <mark>uzunluk $N=N_2-N_1+1$</mark>) ya da sonsuz uzunlukta olabilir. $x[n+kN]=x[n]$ her $n$ için sağlanıyorsa dizi, $N$ periyotlu <b>periyodik</b>dir.`,
+ String.raw`<b>Enerji ve güç:</b> enerji $E=\sum_{n=-\infty}^{\infty}|x[n]|^2$; ortalama güç (periyodik, periyot $N$) $P_{av}=\frac1N\sum_{n=0}^{N-1}|x[n]|^2$. <b>Temel diziler:</b> <mark>birim örnek $\delta[n]=1$ ($n=0$), 0 ($n\ne0$)</mark>; <mark>birim basamak $\mu[n]=1$ ($n\ge0$), 0 ($n<0$)</mark>. Üstel dizi $x[n]=A\alpha^n$; $\alpha=e^{(\sigma_0+j\omega_0)}$, $A=|A|e^{j\phi}$ yazılırsa $x[n]=|A|e^{\sigma_0n}\cos(\omega_0n+\phi)+j|A|e^{\sigma_0n}\sin(\omega_0n+\phi)$. $\sigma_0$ büyüme/sönüm hızını belirler. Gerçel sinüzoid $A\cos(\omega_0n+\phi)$: $A$ genlik, $\omega_0$ açısal frekans, $\phi$ başlangıç fazı, $f_0=\omega_0/2\pi$.`,
+ String.raw`<b>Periyot koşulu:</b> karmaşık üstel ve sinüzoid dizi ancak <mark>$\omega_0N=2\pi r$</mark> ($r$ tamsayı) sağlanıyorsa periyodiktir; bunu sağlayan en küçük pozitif $N$ periyottur. <b>İşlemler:</b> çarpma $y[n]=x[n]h[n]$, toplama, skalerle çarpma, zaman tersleme $y[n]=x[-n]$, <mark>gecikme $y[n]=x[n-M]$</mark> ($M$ negatifse <i>ilerletme</i>), ekleme (append): uzunluk $N+M$ olur.`,
+ String.raw`<b>MATLAB (Proje 1.1):</b> <code>u=[1 zeros(1,N-1)]</code> birim örnek; <code>s=ones(1,N)</code> birim basamak; <code>ud=[zeros(1,M) 1 zeros(1,N-M-1)]</code> $M$ örnek geciktirilmiş birim örnek. P1_1'de $n=-10:20$ ($31$ eleman) ve <code>u=[zeros(1,10) 1 zeros(1,20)]</code> → 1 değeri $n=0$'dadır. <code>clf</code> grafiği temizler, <code>axis([-10 20 0 1.2])</code> eksen sınırlarını belirler, <code>title/xlabel/ylabel</code> başlık ve etiketleri yazar. $u[n-11]$ ise $n=11$'de 1'dir; $s[n+7]$ ise $n=-7$'den itibaren 1'dir; $s[n-3]$ $n=3$'ten itibaren 1'dir.`
+ ],
+ exam:["Enerji ve güç formülleri; uzunluk N = N2 − N1 + 1.","δ[n] ve μ[n] tanımları; gecikme ve ilerletme.","Periyodiklik koşulu ω0·N = 2πr.","Üstel dizide σ0'ın rolü (büyüme/sönüm).","MATLAB: zeros, ones ile u, s, ud üretimi; n=−10:20 31 eleman.","u[n−11] → n=11; s[n+7] → n=−7'den itibaren."],
+ ex:{q:"$x[n]=\\cos(0{,}1\\pi n)$ dizisinin periyodu nedir?",a:"$\\omega_0N=2\\pi r\\Rightarrow0{,}1\\pi N=2\\pi r\\Rightarrow N=20r$; en küçük $N=20$."},
+ key:["Gecikme n−M (sağa), ilerletme n+M (sola).","Periyodiklik: ω0N = 2πr.","u = [1 zeros(1,N-1)] birim örnek."]
+},
+"Bölüm 2: Zaman Alanında Ayrık Sistemler":{
+ sure:"12 dk",
+ story:[
+ String.raw`Sistem, bir diziyi başka bir diziye çeviren kutudur. <b>Doğrusal</b> sistemde $a x_1+\beta x_2$ girişine yanıt $a y_1+\beta y_2$ olmalıdır (süperpozisyon), tek bir karşı örnek bile sistemi doğrusal olmayan yapar. <b>Zamanla değişmeyen</b> sistemde $x[n-n_0]$ girişine yanıt $y[n-n_0]$'dır. İkisi birlikte sağlanırsa <b>LTI</b> sistem. <b>Nedensel</b> sistem: iki girişin $n<N$ için aynı olması, $n<N$ için aynı çıkış demektir (gelecekten bağımsız). <b>BIBO kararlı</b>: sınırlı girişe sınırlı çıkış.`,
+ String.raw`<b>Dürtü yanıtı</b> $h[n]$, birim örnek $\delta[n]$'ye yanıttır; birim basamağa yanıt <i>basamak yanıtı</i>dır. LTI sistemin çıkışı <mark>evrişim toplamı</mark> $y[n]=\sum_kh[k]x[n-k]=h[n]\circledast x[n]$. <mark>Kaskad bağlı sistemlerde $h[n]=h_1[n]\circledast h_2[n]$</mark>; $h_1\circledast h_2=\delta[n]$ ise biri diğerinin tersidir. <mark>BIBO kararlılık $\iff\sum|h[n]|<\infty$</mark>; <mark>nedensellik $\iff h[k]=0,\ k<0$</mark>.`,
+ String.raw`Fark denklemi: $\sum_{k=0}^{N}d_ky[n-k]=\sum_{k=0}^{M}p_kx[n-k]$; mertebe $\max(N,M)$. Nedensel ise $y[n]=-\sum_{k=1}^{N}\frac{d_k}{d_0}y[n-k]+\sum_{k=0}^{M}\frac{p_k}{d_0}x[n-k]$ ve $n\ge n_0$ için başlangıç koşulları gerekir. <mark>FIR: $h[n]$ sonlu uzunluk ($d_k=0,\ k>0$); aksi halde IIR</mark>.`,
+ String.raw`<b>Proje örnekleri.</b> (a) <b>Hareketli ortalama</b> $y[n]=\frac12(x[n]+x[n-1])$ <i>alçak geçiren</i> süzgeçtir: $|H|=|\cos(\omega/2)|$; $f=0{,}05$'te kazanç $\approx0{,}988$, $f=0{,}47$'de $\approx0{,}094$, yani $\cos(2\pi0{,}47n)$ bileşeni bastırılır. $M$ arttıkça geçirme bandı <b>daralır</b>. (b) $y[n]=\frac12(x[n]-x[n-1])$ <i>yüksek geçiren</i>dir: $\omega=0$'da (DC) kazanç 0, $\omega=\pi$'de kazanç 1. (c) Süpürmeli sinüs (uzunluk 301, frekans 0–0,5) sistemin frekans tepkisini tek çalıştırmada incelemeye yarar. (d) <b>Doğrusal olmayan</b> sistem $y[n]=x^2[n]-x[n-1]x[n+1]$, $x[n]=\cos\omega n$ için çıkış sabittir: $\sin^2\omega$. $f=0{,}05$ → $\sin^2(0{,}1\pi)=0{,}0955$; $f=0{,}1$ → $0{,}3455$; $f=0{,}2$ → $\sin^2(0{,}4\pi)=0{,}9045$.`
+ ],
+ exam:["Doğrusallık, zamanla değişmezlik, nedensellik, BIBO tanımları.","Evrişim toplamı; kaskadda h = h1 ⊛ h2.","BIBO ⇔ Σ|h| < ∞; nedensel ⇔ h[k]=0, k<0.","FIR/IIR ayrımı ve fark denklemi mertebesi.","0,5(x[n]+x[n−1]) alçak geçiren; 0,5(x[n]−x[n−1]) yüksek geçiren.","y = x²[n] − x[n−1]x[n+1] çıkışı sin²ω (sabit).","M arttıkça alçak geçirme bandı daralır."],
+ ex:{q:"$h[n]=(0{,}5)^n\\mu[n]$ sistemi nedensel ve BIBO kararlı mıdır?",a:"$n<0$ için $h[n]=0$ → nedensel. $\\sum|h|=\\sum_{n=0}^\\infty0{,}5^n=2<\\infty$ → BIBO kararlı."},
+ key:["LTI çıkışı = h ile evrişim.","Kararlılık h'nin mutlak toplanabilirliği.","İki nokta ortalama = alçak geçiren; fark = yüksek geçiren."]
+},
+"Bölüm 3: DTFT":{
+ sure:"11 dk",
+ story:[
+ String.raw`Zaman alanında bir diziye bakmak yetmez; hangi frekansları içerdiğini de görmek isteriz. <b>DTFT:</b> <mark>$X(e^{j\omega})=\sum_{n=-\infty}^{\infty}x[n]e^{-j\omega n}$</mark>. Genelde karmaşık bir fonksiyondur: $X=X_{re}+jX_{im}=|X|e^{j\theta(\omega)}$; $|X|$ <i>genlik spektrumu</i>, $\theta=\arg X$ <i>faz spektrumu</i>. DTFT <mark>$\omega$'da periyodik ve sürekli, periyodu $2\pi$</mark>'dir. Gerçel dizi için <mark>$X_{re}$ ve $|X|$ çift fonksiyon, $X_{im}$ ve $\theta$ tek fonksiyon</mark>dur. Ters DTFT: $x[n]=\frac1{2\pi}\int_{-\pi}^{\pi}X(e^{j\omega})e^{j\omega n}d\omega$. DTFT'nin var olması için $\sum|x[n]|<\infty$ (mutlak toplanabilir) olmalıdır.`,
+ String.raw`<b>Özellikler:</b> <mark>zaman kaydırma</mark>: $g[n-n_0]\to e^{-j\omega n_0}G(e^{j\omega})$; <mark>frekans kaydırma</mark>: $e^{j\omega_0n}g[n]\to G(e^{j(\omega-\omega_0)})$; <mark>evrişim</mark>: $g\circledast h\to G\cdot H$; <mark>modülasyon</mark> (çarpım): $g[n]h[n]\to\frac1{2\pi}\int G(e^{j\theta})H(e^{j(\omega-\theta)})d\theta$; zaman tersleme: $g[-n]\to G(e^{-j\omega})$.`,
+ String.raw`<b>MATLAB (Proje 3.1):</b> $X(e^{j\omega})=\frac{p_0+p_1e^{-j\omega}+\dots}{d_0+d_1e^{-j\omega}+\dots}$ biçimindeki rasyonel DTFT, <code>freqz(num,den,w)</code> ile hesaplanır. P3_1'de <code>num=[2 1]; den=[1 -0.6]</code>, yani $X=\frac{2+e^{-j\omega}}{1-0{,}6e^{-j\omega}}$. <code>w=-4*pi:8*pi/511:4*pi</code> <b>512</b> frekans noktası verir. <code>freqz</code> $L$-noktalı DFT ile hesaplar, bu yüzden <mark>$L$ 2'nin kuvveti</mark> (256, 512) seçilir (hız). <code>pause</code> kullanıcı bir tuşa basana dek bekletir. Faz sıçramaları <code>unwrap</code> ile giderilir.`,
+ String.raw`<b>Sayısal örnek:</b> $X=\frac{2+e^{-j\omega}}{1-ae^{-j\omega}}$. $\omega=0$'da $e^{0}=1$ → $\frac{3}{1-a}$: $a=0{,}6\to7{,}5$; $a=0{,}5\to6$; $a=0{,}8\to15$. $\omega=\pi$'de $e^{-j\pi}=-1$ → $\frac{1}{1+a}$: $a=0{,}6\to0{,}625$; $a=0{,}5\to0{,}667$.`
+ ],
+ exam:["DTFT tanımı, periyodu 2π, sürekli oluşu.","Gerçel dizide çift: X_re ve |X|; tek: X_im ve faz.","Ters DTFT formülü ve varlık koşulu.","Zaman/frekans kaydırma, evrişim, modülasyon, tersleme özellikleri.","freqz ve L'nin 2'nin kuvveti olması; w vektörü 512 nokta.","pause, unwrap komutları.","(2+e^{-jω})/(1−0,6e^{-jω}) için ω=0 → 7,5; ω=π → 0,625."],
+ ex:{q:"$X(e^{j\\omega})=\\frac{2+e^{-j\\omega}}{1-0{,}8e^{-j\\omega}}$ için $X(e^{j0})$ ve $X(e^{j\\pi})$ kaçtır?",a:"$X(e^{j0})=\\frac{3}{0{,}2}=15$; $X(e^{j\\pi})=\\frac{2-1}{1+0{,}8}=0{,}556$."},
+ key:["DTFT sürekli ve 2π periyodik.","Gerçel dizide genlik çift, faz tek.","freqz için L 2'nin kuvveti."]
+},
+"Bölüm 3: DFT ve z-Dönüşümü":{
+ sure:"13 dk",
+ story:[
+ String.raw`Bilgisayar sürekli $\omega$ ile çalışamaz; sonlu uzunluklu diziyi sonlu sayıda frekansta inceler. <b>N noktalı DFT:</b> <mark>$X[k]=\sum_{n=0}^{N-1}x[n]W_N^{kn}$, $W_N=e^{-j2\pi/N}$</mark>. <mark>$X[k]$, DTFT'nin $\omega_k=2\pi k/N$ noktalarındaki ($k=0\dots N-1$) örnekleridir.</mark> MATLAB'da <code>fft(x)</code> (aynı uzunlukta), <code>fft(x,L)</code> ($L>N$ ise sonuna sıfır eklenir, zero-padding), <code>ifft</code> ters DFT.`,
+ String.raw`<b>Dairesel evrişim:</b> $y_c[n]=\sum_{m=0}^{N-1}g[m]h[(n-m)_N]$, $(\cdot)_N$ mod $N$. <mark>Uzunlukları $N$ ve $M$ olan dizilerin doğrusal evrişimi, ikisini de sıfırla $N+M-1$ uzunluğa tamamlayıp $(N+M-1)$ noktalı dairesel evrişimle elde edilir.</mark> <b>DFT özellikleri:</b> dairesel zaman kaydırma $g[(n-n_0)_N]\to W_N^{kn_0}G[k]$; dairesel frekans kaydırma $W_N^{-k_0n}g[n]\to G[(k-k_0)_N]$; dairesel evrişim $g\circledast h\to G[k]H[k]$; Parseval: $\sum|g[n]|^2=\frac1N\sum|G[k]|^2$.`,
+ String.raw`<b>Gerçel dizilerde:</b> periyodik çift kısım $g_{pe}[n]=\frac12(g[n]+g[(-n)_N])$, tek kısım $g_{po}[n]=\frac12(g[n]-g[(-n)_N])$; bunların DFT'leri <mark>$\mathrm{Re}\{G[k]\}$ ve $j\,\mathrm{Im}\{G[k]\}$</mark> ile eşleşir (kitapta Re ve Im olarak yazılır). <b>İki gerçel diziyi tek DFT'yle:</b> $x[n]=g[n]+jh[n]$; $G[k]=\frac12(X[k]+X^*[(-k)_N])$, $H[k]=\frac1{2j}(X[k]-X^*[(-k)_N])$. <b>2N uzunluklu gerçel $v[n]$:</b> $g[n]=v[2n]$, $h[n]=v[2n+1]$ (N noktalı); $V[k]=G[(k)_N]+W_{2N}^kH[(k)_N]$, $0\le k\le2N-1$.`,
+ String.raw`<b>z-dönüşümü:</b> <mark>$G(z)=\sum_{n=-\infty}^{\infty}g[n]z^{-n}$</mark>; yakınsadığı bölge <b>ROC</b> halka biçimindedir: $R_{g-}<|z|<R_{g+}$. <mark>ROC birim çemberi içeriyorsa $|z|=1$ üzerindeki z-dönüşümü DTFT'ye eşittir.</mark> Örnek: $x[n]=a^n\mu[n]$ ($|a|<1$) için $X(z)=\frac1{1-az^{-1}}$, ROC $|z|>|a|$. LTI sistemlerde dönüşümler $z^{-1}$'in rasyonel fonksiyonudur; payın kökleri <b>sıfır</b>, paydanın kökleri <b>kutup</b>tur. ROC hiçbir kutbu içermez, kutuplarla sınırlanır. <mark>Nedensel ve kararlı sistemin tüm kutupları birim çemberin içinde olmalıdır.</mark> Ters z-dönüşümü için kısmi kesirlere açma (rezidüler) kullanılır.`
+ ],
+ exam:["DFT tanımı ve W_N = e^{−j2π/N}; X[k] = DTFT örnekleri (ω = 2πk/N).","fft(x,L): L>N ise sıfır ekleme.","Dairesel kaydırma, evrişim, Parseval özellikleri.","Doğrusal evrişim için N+M−1 noktalı dairesel evrişim.","Gerçel dizi: çift kısım Re, tek kısım Im ile eşleşir.","İki gerçel diziyi tek DFT ile hesaplama formülleri.","z-dönüşümü, ROC, birim çember = DTFT; a^n μ[n] → 1/(1−az^{-1}), |z|>|a|.","Nedensel + kararlı → kutuplar birim çember içinde."],
+ ex:{q:"Uzunlukları 4 ve 3 olan iki dizinin doğrusal evrişimi kaç noktalı dairesel evrişimle bulunur? $x[n]=0{,}5^n\\mu[n]$'in z-dönüşümü ve ROC'u nedir?",a:"$4+3-1=6$ noktalı dairesel evrişim (her iki dizi sıfırla 6'ya tamamlanır). $X(z)=\\frac{1}{1-0{,}5z^{-1}}$, ROC $|z|>0{,}5$."},
+ key:["DFT = DTFT'nin N örneği.","Dairesel evrişim = DFT çarpımı; doğrusal için N+M−1.","Kararlı nedensel sistem: kutuplar birim çember içinde."]
+}
+};
+
 LES["Sayısal Hesaplama"]={
 "Taylor ve Maclaurin Serisi":{
  sure:"10 dk",
